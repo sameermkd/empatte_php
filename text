@@ -1,0 +1,91 @@
+  <div class="row my-4">
+    <div class="col-12 col-md-12">
+        <div class="card">
+            <h5 class="card-header">Employee Wise Report</h5>
+
+            <div class="card-body">
+                <form action="" method="post" enctype="multipart/form-data">
+                    <div class="form-group  w-50">
+                        <label for="usr">Employee ID:</label>
+                        <input type="text" class="form-control" id="usr" name="empid" placeholder="Enter Job Id" required>
+                    </div>
+                    <div class="form-group  w-50">
+                        <label for="usr">Starting Date:</label>
+                        <input type="date" class="form-control" id="usr" name="startdate" placeholder="Enter Job Id" required>
+                    </div>
+                    <div class="form-group  w-50">
+                        <label for="usr">Ending Date:</label>
+                        <input type="date" class="form-control" id="usr" name="enddate" placeholder="Enter Job Id" required>
+                    </div>
+                    <div class="form-group  w-75">
+                        <button type="submit" name="table" class="btn btn-success mt-2">Generate Table</button>
+                        <button type="submit" name="pdf" class="btn btn-success mt-2">Generate PDF</button>
+                        <button type="submit" name="excel" class="btn btn-success mt-2">Generate Excel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <?php
+    if(isset($_POST['table']))
+      {
+        $empid=$_POST['empid'];
+        $startdate=$_POST['startdate'];
+        $enddate=$_POST['enddate'];
+        ?>
+    <div class="col-12 col-md-12 my-3">
+        <div class="card">
+            <h5 class="card-header">Employee Details</h5>
+            <div class="card-body">
+                <table>
+                    <tr>
+                        <th width="30%">Employee ID :<?php echo $empid; ?></th>
+                        <th width="40%">Start Date :<?php echo $startdate; ?></th>
+                        <th width="40%">End Date :<?php echo $endate; }?></th>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="col-12 col-md-12 my-3">
+        <div class="card">
+            <h5 class="card-header">Work Deatails</h5>
+            <div class="card-body">
+
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Date</th>
+                            <th scope="col">Job Id</th>
+                            <th scope="col">Customer Name</th>
+                            <th scope="col">Job Description</th>
+                            <th scope="col">Starting Time</th>
+                            <th scope="col">Ending Time</th>
+                            <th scope="col">Total Time</th>
+                            <th scope="col">Over Time</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for a in data %}
+                        <tr>
+                            <th scope="row">{{ forloop.counter }}</th>
+                            <td>{{a.date}}</td>
+                            <td>{{a.jobid}}</td>
+                            <td>{{a.customername}}</td>
+                            <td>{{a.jobdesc}}</td>
+                            <td>{{a.starttime}}</td>
+                            <td>{{a.endtime}}</td>
+                            <td>{{ a.starttime|timesince:a.endtime }}</td>
+                            <td></td>
+                        </tr>
+                        {% endfor %}
+                        <tr>
+                            <td>Total :</td>
+                            <td><b>{{total}}</b></td>
+                            <td></td>
+                            <td>Over Time :</td>
+                            <td><b>{{overtime}}</b></td>
+                        </tr>
+                    </tbody>
+                </table>
