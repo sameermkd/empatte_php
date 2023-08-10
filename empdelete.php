@@ -32,7 +32,7 @@
         if(isset($_POST['yes']))
             {
                 $empid=$_POST['empid'];
-                $sql = "DELETE FROM employee WHERE empid = '$empid'";
+                $sql = "DELETE FROM employee WHERE id = '$empid'";
                 if(mysqli_query($conn, $sql)){
                      echo '<div class="alert alert-danger">
                             <p>Deleted Success</p>

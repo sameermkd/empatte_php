@@ -27,15 +27,16 @@
         $difference = abs($endtimestamp - $starttimestamp)/3600;
         return $difference;
         }
-    $pdf->SetFont('Arial','B',10);
+    $pdf->SetFont('Arial','B',8);
         /*Heading Of the table*/
     $pdf->Cell(12 ,10,'SL NO',1,0,'C');
-    $pdf->Cell(20 ,10,'Job ID',1,0,'C');
+    $pdf->Cell(12 ,10,'Job ID',1,0,'C');
     $pdf->Cell(40 ,10,'Customer Name',1,0,'C');
     $pdf->Cell(40 ,10,'Job Description',1,0,'C');
-    $pdf->Cell(22 ,10,'Stating Time',1,0,'C');
-    $pdf->Cell(22 ,10,'Ending Time',1,0,'C');
-    $pdf->Cell(22 ,10,'Total Time',1,1,'C');
+    $pdf->Cell(30 ,10,'Emp Name',1,0,'C');
+    $pdf->Cell(18 ,10,'Stating Time',1,0,'C');
+    $pdf->Cell(18 ,10,'Ending Time',1,0,'C');
+    $pdf->Cell(15 ,10,'Total Time',1,1,'C');
     $i=1;
     $totaltime=0;
     // $ot=0;
@@ -43,21 +44,22 @@
         while($row = mysqli_fetch_assoc($result)) {
              {
                 $pdf->Cell(12 ,10,$i,1,0);
-                $pdf->Cell(20 ,10,$row['jobid'],1,0);
+                $pdf->Cell(12 ,10,$row['jobid'],1,0);
                 $pdf->Cell(40 ,10,$row['customername'],1,0);
                 $pdf->Cell(40 ,10,$row['jobdesc'],1,0);
-                $pdf->Cell(22 ,10,$new_date_format = date('H:i A', strtotime($row['starttime'])),1,0);
-                $pdf->Cell(22 ,10,$new_date_format = date('H:i A', strtotime($row['endtime'])),1,0);
+                $pdf->Cell(30 ,10,$row['empname'],1,0);
+                $pdf->Cell(18,10,$new_date_format = date('H:i A', strtotime($row['starttime'])),1,0);
+                $pdf->Cell(18 ,10,$new_date_format = date('H:i A', strtotime($row['endtime'])),1,0);
                 $totalwork=differenceInHours($row['endtime'],$row['starttime']);
                 if($row['lunch']=="Yes")
                     {
                     $totalwork=$totalwork-1;
-                    $pdf->Cell(22 ,10,round($totalwork,2),1,1);
+                    $pdf->Cell(15 ,10,round($totalwork,2),1,1);
                     $totaltime=$totaltime+$totalwork;
                     }
                 else
                     {
-                    $pdf->Cell(22 ,10,round($totalwork,2),1,1);
+                    $pdf->Cell(15 ,10,round($totalwork,2),1,1);
                     $totaltime=$totaltime+$totalwork;
                     }
                 //     $working=differenceInHours($row['endtime'],$row['starttime']);
@@ -87,7 +89,7 @@
                 }
                 $i++;
             }
-            $pdf->Cell(178 ,10,"Total Time :".round($totaltime,2),1,0);
+            $pdf->Cell(185 ,10,"Total Time :".round($totaltime,2),1,0);
 
     }
     $pdf->Output();
